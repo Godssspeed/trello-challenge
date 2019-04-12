@@ -29,7 +29,7 @@
 .item {
   margin-top: 1.5rem;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   background: white;
   margin: 1rem;
 }
@@ -37,4 +37,8 @@
 .column > p {
   font-size: 2rem;
   font-weight: bold;
+}
+
+.item p {
+  padding: 0 1rem;
 }

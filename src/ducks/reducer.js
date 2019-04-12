@@ -16,6 +16,7 @@ const MOVEBACKTOTODO = "MOVEBACKTOTODO";
 const MOVETOCOMPLETED = "MOVETOCOMPLETED";
 const MOVEBACKTOINPROGRESS = "MOVEBACKTOINPROGRESS";
 
+// ACTION CREATORS TO ADD TO ARRAYS
 export const addToBacklog = item => {
   return {
     type: ADDBACKLOG,
@@ -43,6 +44,8 @@ export const addToCompleted = item => {
     payload: item
   };
 };
+
+// ACTION CREATORS TO MOVE LIST ITEMS TO NEW ARRAYS
 
 export const moveToToDo = value => {
   return {
@@ -89,6 +92,7 @@ export const moveBackToInProgress = value => {
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case ADDBACKLOG:
+      // SPREAD OPERATOR USED TO PUSH ITEMS TO ARRAY
       return { ...state, backlog: [...state.backlog, action.payload] };
     case ADDTODO:
       return { ...state, todo: [...state.todo, action.payload] };
@@ -97,55 +101,45 @@ export default function reducer(state = initialState, action) {
     case ADDTOCOMPLETED:
       return { ...state, completed: [...state.completed, action.payload] };
     case MOVETOTODO:
+      console.log((state.backlog = [...state.backlog, action.payload]));
       return {
         ...state,
-        backlog: [
-          ...state.backlog.slice(1),
-          ...state.backlog.slice(1, action.index)
-        ],
+        backlog: state.backlog.filter(e => e !== action.payload),
         todo: [...state.todo, action.payload]
       };
 
     case MOVETOBACKLOG:
       return {
         ...state,
-        todo: [...state.todo.slice(1), ...state.todo.slice(1, action.index)],
+        // USED TO FILTER OUT THE VALUE
+        todo: state.todo.filter(e => e !== action.payload),
         backlog: [...state.backlog, action.payload]
       };
     case MOVETOINPROGRESS:
       return {
         ...state,
-        todo: [...state.todo.slice(1), ...state.todo.slice(1, action.index)],
+        todo: state.todo.filter(e => e !== action.payload),
         inProgress: [...state.inProgress, action.payload]
       };
 
     case MOVEBACKTOTODO:
       return {
         ...state,
-        inProgress: [
-          ...state.inProgress.slice(1),
-          ...state.inProgress.slice(1, action.index)
-        ],
+        inProgress: state.inProgress.filter(e => e !== action.payload),
         todo: [...state.todo, action.payload]
       };
 
     case MOVETOCOMPLETED:
       return {
         ...state,
-        inProgress: [
-          ...state.inProgress.slice(1),
-          ...state.inProgress.slice(1, action.index)
-        ],
+        inProgress: state.inProgress.filter(e => e !== action.payload),
         completed: [...state.completed, action.payload]
       };
 
     case MOVEBACKTOINPROGRESS:
       return {
         ...state,
-        completed: [
-          ...state.completed.slice(1),
-          ...state.completed.slice(1, action.index)
-        ],
+        completed: state.completed.filter(e => e !== action.payload),
         inProgress: [...state.inProgress, action.payload]
       };
     default:
