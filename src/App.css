@@ -31,4 +31,10 @@
   display: flex;
   justify-content: space-around;
   background: white;
+  margin: 1rem;
+}
+
+.column > p {
+  font-size: 2rem;
+  font-weight: bold;
 }
